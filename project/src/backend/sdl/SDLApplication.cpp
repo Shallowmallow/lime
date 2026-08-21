@@ -356,6 +356,7 @@ namespace lime {
 
 			case SDL_TEXTINPUT:
 			case SDL_TEXTEDITING:
+			case SDL_TEXTEDITING_EXT:
 
 				ProcessTextEvent (event);
 				break;
@@ -781,6 +782,25 @@ namespace lime {
 
 	void SDLApplication::ProcessTextEvent (SDL_Event* event) {
 
+		const char* text = event->text.text;
+		int start = 0;
+		int length = 0;
+		Uint32 windowID = event->text.windowID;
+
+		if (event->type == SDL_TEXTEDITING) {
+
+			start = event->edit.start;
+			length = event->edit.length;
+
+		} else if (event->type == SDL_TEXTEDITING_EXT) {
+
+			text = event->editExt.text;
+			start = event->editExt.start;
+			length = event->editExt.length;
+			windowID = event->editExt.windowID;
+
+		}
+
 		if (TextEvent::callback) {
 
 			switch (event->type) {
@@ -793,8 +813,15 @@ namespace lime {
 				case SDL_TEXTEDITING:
 
 					textEvent.type = TEXT_EDIT;
-					textEvent.start = event->edit.start;
-					textEvent.length = event->edit.length;
+					textEvent.start = start;
+					textEvent.length = length;
+					break;
+
+				case SDL_TEXTEDITING_EXT:
+
+					textEvent.type = TEXT_EDIT;
+					textEvent.start = start;
+					textEvent.length = length;
 					break;
 
 			}
@@ -805,11 +832,17 @@ namespace lime {
 
 			}
 
-			textEvent.text = (vbyte*)malloc (strlen (event->text.text) + 1);
-			strcpy ((char*)textEvent.text, event->text.text);
+			textEvent.text = (vbyte*)malloc (strlen (text) + 1);
+			strcpy ((char*)textEvent.text, text);
 
-			textEvent.windowID = event->text.windowID;
+			textEvent.windowID = windowID;
 			TextEvent::Dispatch (&textEvent);
+
+		}
+
+		if (event->type == SDL_TEXTEDITING_EXT) {
+
+			SDL_free (event->editExt.text);
 
 		}
 

@@ -136,6 +136,11 @@
             <compilerflag value="-msse2" unless="rpi || HXCPP_ARM64" />
             <compilerflag value="-msse3" unless="rpi || HXCPP_ARM64" />
             <compilerflag value="-mssse3" unless="rpi || HXCPP_ARM64" />
+            <compilerflag value="-I/usr/include/dbus-1.0" />
+            <compilerflag value="-I/usr/lib/x86_64-linux-gnu/dbus-1.0/include" />
+            <compilerflag value="-I/usr/include/ibus-1.0" />
+            <compilerflag value="-I/usr/include/glib-2.0" />
+            <compilerflag value="-I/usr/lib/x86_64-linux-gnu/glib-2.0/include" />
 
             <set name="XINPUT2" value="${NATIVE_TOOLKIT_SDL_X11_XINPUT2}" />
             <compilerflag value="-DNATIVE_TOOLKIT_SDL_X11_XINPUT2=${XINPUT2}" if="XINPUT2" />

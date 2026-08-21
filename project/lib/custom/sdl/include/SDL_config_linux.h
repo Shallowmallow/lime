@@ -75,7 +75,9 @@
 /* #undef HAVE_ALTIVEC_H */
 /* #undef HAVE_PTHREAD_NP_H */
 /* #undef HAVE_LIBUDEV_H */
-/* #undef HAVE_DBUS_DBUS_H */
+#define HAVE_DBUS_DBUS_H 1
+#define HAVE_IBUS_IBUS_H 1
+#define SDL_USE_LIBDBUS 1
 
 /* C library functions */
 #define HAVE_MALLOC 1
@@ -288,6 +290,7 @@
 /* #undef SDL_VIDEO_DRIVER_X11_CONST_PARAM_XDATA32 */
 /* #undef SDL_VIDEO_DRIVER_X11_CONST_PARAM_XEXTADDDISPLAY */
 #define SDL_VIDEO_DRIVER_X11_HAS_XKBKEYCODETOKEYSYM 1
+#define SDL_USE_IME 1
 
 /* #undef SDL_VIDEO_RENDER_D3D */
 /* #undef SDL_VIDEO_RENDER_D3D11 */
